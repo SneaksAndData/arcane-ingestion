@@ -1,12 +1,11 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
-ARG NUGET_TOKEN
-ARG PROJECT_NAME
+
+ARG PROJECT_NAME="Arcane.Ingestion"
 
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
 COPY src/*.csproj ./
-RUN dotnet nuget add source --username USERNAME --password $NUGET_TOKEN --store-password-in-clear-text --name github "https://nuget.pkg.github.com/SneaksAndData/index.json"
 RUN dotnet restore
 
 # Copy everything else and build
@@ -15,6 +14,8 @@ RUN dotnet publish "$PROJECT_NAME.csproj" -c Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-bullseye-slim
+LABEL org.opencontainers.image.source=https://github.com/SneaksAndData/arcane-ingestion
+
 ARG TRACER_VERSION="2.32.0"
 ARG PROJECT_NAME
 ENV PROJECT_ASSEMBLY=$PROJECT_NAME
