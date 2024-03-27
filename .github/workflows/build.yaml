@@ -7,8 +7,7 @@ on:
     branches: [ main ]
     
 env:
-  PROJECT_NAME: Arcane.Framework
-  PROJECT_NAME_LOWER: arcane.framework
+  PROJECT_NAME: Arcane.Ingestion
   
 jobs:
   validate_commit:
