@@ -1,6 +1,33 @@
 environment: "Development"
 replicaCount: 1
 
+nodes:
+  taint: "kubernetes.sneaksanddata.com/servicenodetype"
+  taintValue: "arcane"
+  
+logs:
+  datadogSite: "https://http-intake.logs.datadoghq.eu"
+  logLevel: "INFO"
+  
+limits:
+  ingestion:
+    cpu: '1000m'
+    memory: '1500Mi'
+    
+hpa:
+  scaleDown:
+    pods: 1
+    percent: 10
+    period: 180
+    stabilizationWindow: 300
+  scaleUp:
+    pods: 1
+    percent: 10
+    period: 30
+    stabilizationWindow: 120
+  maxReplicas: 10
+  cpuTarget: 35
+  
 image:
   repository: arcane-ingestion
   

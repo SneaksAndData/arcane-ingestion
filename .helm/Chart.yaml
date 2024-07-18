@@ -1,7 +1,8 @@
 apiVersion: v2
 name: arcane-ingestion
 description: |
-  Arcane is a Akka.NET-based data ingestion service that can be used to ingest data from various sources and store it in a data lake.
+  Arcane is a Akka.NET-based data ingestion service that can be used to ingest
+  data from various sources and store it in a data lake.
   This chart deploys the Arcane Ingestion service.
 type: application
 version: 0.0.0
