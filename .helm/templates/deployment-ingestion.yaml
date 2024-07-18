@@ -67,9 +67,9 @@ spec:
             value: {{ .Values.logs.datadogSite }}
           - name: PROTEUS__DEFAULT_LOG_LEVEL
             value: {{ .Values.logs.logLevel | quote }}
-        {{- if .Values.jobTemplateSettings.extraEnvFrom }}
+        {{- if .Values.extraEnvFrom }}
         envFrom:
-          {{- with .Values.jobTemplateSettings.extraEnvFrom }}
+          {{- with .Values.extraEnvFrom }}
             {{- toYaml . | nindent 10 }}
           {{- end }}
         {{- end }}
