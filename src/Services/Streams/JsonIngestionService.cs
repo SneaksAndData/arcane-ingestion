@@ -17,14 +17,14 @@ namespace Arcane.Ingestion.Services.Streams
 {
     public class JsonIngestionService : IIngestionService<JsonDocument>
     {
-        private readonly IBlobStorageService blobStorageService;
+        private readonly IBlobStorageWriter blobStorageService;
         private readonly IMaterializer materializer;
         private readonly JsonIngestionConfiguration serviceConfig;
         private readonly MetricsService metricsService;
         private readonly IRunnableGraph<Sink<(string, DateTimeOffset, JsonDocument), NotUsed>> graph;
         private readonly Sink<(string, DateTimeOffset, JsonDocument), NotUsed> graphSink;
 
-        public JsonIngestionService(IOptions<JsonIngestionConfiguration> options, IBlobStorageService blobStorageService, MetricsService metricsService, IMaterializer materializer)
+        public JsonIngestionService(IOptions<JsonIngestionConfiguration> options, IBlobStorageWriter blobStorageService, MetricsService metricsService, IMaterializer materializer)
         {
             this.blobStorageService = blobStorageService;
             this.materializer = materializer;

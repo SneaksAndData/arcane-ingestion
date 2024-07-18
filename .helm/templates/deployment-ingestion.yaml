@@ -65,21 +65,21 @@ spec:
                 fieldPath: metadata.name
           - name: PROTEUS__DATADOG_SITE
             value: {{ .Values.logs.datadogSite }}
-          - name: PROTEUS__DD_STATSD_HOST
-            value: {{ .Values.metrics.statsd_host }}
-          - name: PROTEUS__DD_STATSD_PORT
-            value: {{ .Values.metrics.statsd_port | quote }}
           - name: PROTEUS__DEFAULT_LOG_LEVEL
             value: {{ .Values.logs.logLevel | quote }}
+        {{- if .Values.jobTemplateSettings.extraEnvFrom }}
+        envFrom:
+          {{- with .Values.jobTemplateSettings.extraEnvFrom }}
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+        {{- end }}
         volumeMounts:
-        - name: apmsocketpath
-          mountPath: /var/run/datadog
         - name: arcane-config
           mountPath: /app/appsettings.json
           subPath: appsettings.json
-        - name: {{ template "app.name" . }}-secrets
-          mountPath: /app/secrets/
-          readOnly: true
+        {{- with .Values.extraVolumeMounts }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
         resources:
           limits:
             cpu: {{ .Values.limits.ingestion.cpu }}
@@ -88,9 +88,11 @@ spec:
             cpu: {{ .Values.limits.ingestion.cpu }}
             memory: {{ .Values.limits.ingestion.memory }}
       volumes:
-      - name: apmsocketpath
-        hostPath:
-          path: /var/run/datadog/
       - name: arcane-config
         configMap:
           name: {{ template "app.name" . }}-config
+      {{- if .Values.extraVolumes }}
+        {{- with .Values.extraVolumes }}
+          {{- toYaml . | nindent 6 }}
+        {{- end }}
+      {{- end }}
