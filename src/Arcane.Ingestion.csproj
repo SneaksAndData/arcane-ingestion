@@ -8,7 +8,8 @@
     </PropertyGroup>
     
     <ItemGroup>
-        <PackageReference Include="SnD.Sdk" Version="1.0.4"/>
+        <PackageReference Include="Arcane.Framework" Version="0.0.24"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
 
 </Project>
