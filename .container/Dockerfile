@@ -16,7 +16,7 @@ RUN dotnet_arch=$(test "$TARGETARCH" = "amd64" && echo "x64" || echo "$TARGETARC
 # Copy everything else and build
 COPY src/. ./
 RUN dotnet_arch=$(test "$TARGETARCH" = "amd64" && echo "x64" || echo "$TARGETARCH") && \
-    dotnet publish "Arcane.Stream.BlobStorage.csproj" -c Release -o out --runtime "linux-$dotnet_arch"
+    dotnet publish "Arcane.Ingestion.csproj" -c Release -o out --runtime "linux-$dotnet_arch"
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-bookworm-slim
@@ -44,4 +44,4 @@ COPY --from=build-env /app/out .
 
 USER app
 
-ENTRYPOINT ["dotnet", "Arcane.Stream.BlobStorage.dll"]
+ENTRYPOINT ["dotnet", "Arcane.Ingestion.dll"]
