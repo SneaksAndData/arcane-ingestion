@@ -42,6 +42,9 @@ namespace Arcane.Ingestion
             services.AddAzureTable<TableEntity>(AzureStorageConfiguration.CreateDefault());
             services.AddDatadogMetrics(DatadogConfiguration.Default(nameof(Arcane)));
 
+            var env = AmazonStorageConfiguration.CreateFromEnv();
+            services.AddAwsS3Writer(env);
+
             services.AddSingleton<IIngestionService<JsonDocument>, JsonIngestionService>();
             services.AddKubernetes();
 
