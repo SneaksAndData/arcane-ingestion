@@ -47,7 +47,7 @@ spec:
               - '-c'
               - |
                 
-                curl --fail http://localhost:80/health
+                curl --fail http://localhost:8080/health
 
           initialDelaySeconds: 10
           timeoutSeconds: 5
