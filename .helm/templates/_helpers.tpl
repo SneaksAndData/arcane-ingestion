@@ -56,3 +56,9 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "app.tracerIngestionLabels" -}}
+tags.datadoghq.com/env: {{ .Values.environment }}
+tags.datadoghq.com/service: "arcane-ingestion"
+tags.datadoghq.com/version: {{ .Values.image.tag }}
+{{- end -}}
