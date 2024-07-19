@@ -1,5 +1,5 @@
-name: Publish Arcane.Stream.BlobStorage to ECR public registry
-run-name: Publish Arcane.Stream.BlobStorage to public.ecr.aws by @${{ github.actor }}
+name: Publish Arcane.Ingestion to ECR public registry
+run-name: Publish Arcane.Ingestion to public.ecr.aws by @${{ github.actor }}
 
 on:
   workflow_dispatch:
