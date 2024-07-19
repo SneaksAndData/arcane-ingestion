@@ -40,7 +40,7 @@ namespace Arcane.Ingestion
 
             services.AddAzureBlob(AzureStorageConfiguration.CreateDefault());
             services.AddAzureTable<TableEntity>(AzureStorageConfiguration.CreateDefault());
-            services.AddDatadogMetrics(DatadogConfiguration.Default(nameof(Arcane)));
+            services.AddDatadogMetrics(DatadogConfiguration.UnixDomainSocket(nameof(Arcane)));
 
             var env = AmazonStorageConfiguration.CreateFromEnv();
             services.AddAwsS3Writer(env);
