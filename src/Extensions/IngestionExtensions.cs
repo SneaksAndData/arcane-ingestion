@@ -18,7 +18,7 @@ public static class IngestionExtensions
     /// <returns></returns>
     public static JsonDocument WrapXml(this XmlDocument xml)
     {
-        var contentBytes = Encoding.Unicode.GetBytes(xml.OuterXml);
+        var contentBytes = Encoding.UTF8.GetBytes(xml.OuterXml);
         return JsonSerializer.SerializeToDocument(new
         {
             ContentData = Convert.ToBase64String(contentBytes),
