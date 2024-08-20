@@ -50,7 +50,11 @@ namespace Arcane.Ingestion
 
             services.AddHealthChecks();
 
-            services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+            services.AddControllers()
+                .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()))
+                .AddXmlSerializerFormatters()
+                .AddXmlDataContractSerializerFormatters();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Arcane", Version = "v1" });
