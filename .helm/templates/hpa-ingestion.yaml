@@ -36,7 +36,7 @@ spec:
           averageUtilization: {{ .Values.hpa.cpuTarget }}
           type: Utilization
       type: Resource
-  minReplicas: 3
+  minReplicas: {{ .Values.hpa.minReplicas }}
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
