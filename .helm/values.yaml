@@ -1,5 +1,4 @@
 environment: "Development"
-replicaCount: 1
 
 nodes:
   taint: "kubernetes.sneaksanddata.com/servicenodetype"
@@ -27,6 +26,7 @@ hpa:
     stabilizationWindow: 120
   maxReplicas: 10
   cpuTarget: 35
+  minReplicas: 1
   
 image:
   repository: arcane-ingestion
