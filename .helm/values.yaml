@@ -1,6 +1,33 @@
 environment: "Development"
-replicaCount: 1
 
+nodes:
+  taint: "kubernetes.sneaksanddata.com/servicenodetype"
+  taintValue: "arcane"
+  
+logs:
+  datadogSite: "https://http-intake.logs.datadoghq.eu"
+  logLevel: "INFO"
+  
+limits:
+  ingestion:
+    cpu: '1000m'
+    memory: '1500Mi'
+    
+hpa:
+  scaleDown:
+    pods: 1
+    percent: 10
+    period: 180
+    stabilizationWindow: 300
+  scaleUp:
+    pods: 1
+    percent: 10
+    period: 30
+    stabilizationWindow: 120
+  maxReplicas: 10
+  cpuTarget: 35
+  minReplicas: 1
+  
 image:
   repository: arcane-ingestion
   
@@ -16,6 +43,36 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-resources:
-  cpu: 100m
-  memory: 128Mi
+resources: { }
+  
+  
+settings:
+  bufferSize: 16
+  throttleDocumentLimit: 256
+  throttleDocumentBurst: 1024
+  throttleTimespan: "0.00:00:01"
+  maxDocumentsPerFile: 1024
+  groupingInterval: "0.00:00:30"
+  ingestionSinkPath: "ingestion@"
+  
+# Extra volumes to add to the streaming job
+extraVolumeMounts: []
+# Example:
+#
+#  - mountPath: /data
+#    name: data-volume
+
+# Extra volumes to add to the streaming job
+extraVolumes: []
+# Example:
+#
+#  - mountPath: /data
+#    name: data-volume
+
+# Extra environment variables referencing a ConfigMap or Secret
+extraEnvFrom: []
+# Example:
+#
+#  envFrom:
+#    - configMapRef:
+#        name: custom-api-access-token

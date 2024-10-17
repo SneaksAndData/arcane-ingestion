@@ -8,12 +8,14 @@ metadata:
 data:
   appsettings.json: |
     {
-      "Logging": {
-        "LogLevel": {
-          "Default": "Information",
-          "Microsoft.AspNetCore": "Warning"
-        }
+      "AllowedHosts": "*",
+      "JsonIngestionConfiguration": {
+        "BufferSize": {{ .Values.settings.bufferSize }},
+        "ThrottleDocumentLimit": {{ .Values.settings.throttleDocumentLimit }},
+        "ThrottleDocumentBurst": {{ .Values.settings.throttleDocumentBurst }},
+        "ThrottleTimespan": {{ .Values.settings.throttleTimespan | quote }},
+        "MaxDocumentsPerFile": {{ .Values.settings.maxDocumentsPerFile }},
+        "GroupingInterval": {{ .Values.settings.groupingInterval | quote }},
+        "IngestionSinkPath": {{ .Values.settings.ingestionSinkPath | quote }}
       },
-      "AllowedHosts": "*"
     }
-

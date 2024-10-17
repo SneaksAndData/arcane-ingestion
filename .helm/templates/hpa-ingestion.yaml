@@ -1,0 +1,43 @@
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "app.name" . }}-ingestion
+spec:
+  behavior:
+    scaleDown:
+      policies:
+        -
+          periodSeconds: {{ .Values.hpa.scaleDown.period }}
+          type: Pods
+          value: {{ .Values.hpa.scaleDown.pods }}
+        -
+          periodSeconds: {{ .Values.hpa.scaleDown.period }}
+          type: Percent
+          value: {{ .Values.hpa.scaleDown.percent }}
+      stabilizationWindowSeconds: {{ .Values.hpa.scaleDown.stabilizationWindow }}
+    scaleUp:
+      policies:
+        -
+          periodSeconds: {{ .Values.hpa.scaleUp.period }}
+          type: Percent
+          value: {{ .Values.hpa.scaleUp.percent }}
+        -
+          periodSeconds: {{ .Values.hpa.scaleUp.period }}
+          type: Pods
+          value: {{ .Values.hpa.scaleUp.pods }}
+      stabilizationWindowSeconds: {{ .Values.hpa.scaleUp.stabilizationWindow }}
+  maxReplicas: {{ .Values.hpa.maxReplicas }}
+  metrics:
+    -
+      resource:
+        name: cpu
+        target:
+          averageUtilization: {{ .Values.hpa.cpuTarget }}
+          type: Utilization
+      type: Resource
+  minReplicas: {{ .Values.hpa.minReplicas }}
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ template "app.name" . }}-ingestion
