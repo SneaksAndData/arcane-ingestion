@@ -21,6 +21,13 @@ spec:
       annotations:
         deployment/date: {{ now }}
     spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              {{- include "app.selectorLabels" . | nindent 4 }}
       serviceAccountName: {{ template "app.serviceAccountName" . }}
       affinity:
         nodeAffinity:
