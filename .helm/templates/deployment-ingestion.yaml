@@ -27,7 +27,7 @@ spec:
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-              {{- include "app.selectorLabels" . | nindent 4 }}
+              {{- include "app.selectorLabels" $ | nindent 4 }}
       serviceAccountName: {{ template "app.serviceAccountName" . }}
       affinity:
         nodeAffinity:
